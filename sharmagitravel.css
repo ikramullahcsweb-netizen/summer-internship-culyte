@@ -4,65 +4,8 @@ body{
     background-color: #f3f4f6
     
 }
-/* 
-.navbar{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 20px;
-    font-weight: 600;
-    margin-left: 40px;
-    margin-right: 40px; 
-}
-.navbar-center{
-    display: flex;
-    flex-direction: row;
-    gap: 45px;
-    text-decoration: dotted;
-}
-a{
-    text-decoration: none;
-    color: #111827;
-    font-weight: 600;
-}
-.navbar-button{
-    color:  rgba(255, 0, 0, 0.8);
-    background: #f3f4f6;
-    border-color:  rgba(255, 0, 0, 0.7);
-    padding: 5px;
-    font-weight: bold;
-} */
 
-/* .navbar{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 20px;
-    font-weight: 600;
-    margin-left: 40px;
-    margin-right: 40px; 
-}
 
-.navbar-center{
-    display: flex;
-    flex-direction: row;
-    gap: 45px;
-    text-decoration: dotted;
-}
-a{
-    text-decoration: none;
-    color: #111827;
-    font-weight: 600;
-}
-
-.navbar-button{
-    color:  rgba(255, 0, 0, 0.8);
-    background: #f3f4f6;
-    border-color:  rgba(255, 0, 0, 0.7);
-    padding: 5px;
-    font-weight: bold;
-
-} */
 header {
     display: flex;
     flex-direction: row;
