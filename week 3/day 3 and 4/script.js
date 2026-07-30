@@ -34,3 +34,41 @@ console.log("Saved as string:", savedString);
 // Wapis load karna
 const loadedUser = JSON.parse(savedString);
 console.log("Loaded user name:", loadedUser.name);
+
+// Ek student ka record
+const student2 = { name: "Ali", marks: 80, city: "Mingora" };
+
+console.log("Original:", student2);
+
+//  Galat tareeqa — direct andar se badalna
+ student2.marks = 90;
+// (isse original object hi permanently change ho jata, purani value kho jati)
+
+//  Sahi tareeqa — spread se naya object banao
+const updatedStudent = { ...student2, marks: 90 };
+
+console.log("Original still same:", student2);
+console.log("New updated version:", updatedStudent);
+
+
+// Ab isi tareeqe se ek array pe try karte hain
+const students = [
+  { name: "Ali", marks: 80 },
+  { name: "Sara", marks: 90 },
+];
+
+// Naya student add karna hai — bina purane array ko chede
+const newStudent = { name: "Zain", marks: 70 };
+const updatedList = [...students, newStudent];
+
+console.log("Original list:", students);
+console.log("Updated list:", updatedList);
+
+
+// Ek specific student ki marks update karni hai (sirf "Ali" ki)
+const afterMarksUpdate = students.map((s) =>
+  s.name === "Ali" ? { ...s, marks: 95 } : s
+);
+
+console.log("After updating Ali's marks:", afterMarksUpdate);
+console.log("Original list untouched:", students);
