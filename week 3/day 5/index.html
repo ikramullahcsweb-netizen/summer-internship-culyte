@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HOF & Callbacks: Light & Dark Mode</title>
+    <style>
+        :root {
+            --bg-color: #f4f4f9;
+            --text-color: #333333;
+            --input-bg: #ffffff;
+            --input-border: #ccc;
+            --btn-bg: #007bff;
+            --btn-color: #fff;
+            --output-color: #007bff;
+            --success-bg: rgba(40, 167, 69, 0.15);
+            --success-border: #28a745;
+            --success-color: #28a745;
+        }
+
+        body.dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --input-bg: #1e1e1e;
+            --input-border: #444;
+            --btn-bg: #00adb5;
+            --btn-color: #fff;
+            --output-color: #4ecca3;
+            --success-bg: rgba(78, 204, 163, 0.15);
+            --success-border: #4ecca3;
+            --success-color: #4ecca3;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            text-align: center;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        input {
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            border: 1px solid var(--input-border);
+            padding: 12px;
+            border-radius: 6px;
+            width: 280px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        button {
+            background-color: var(--btn-bg);
+            color: var(--btn-color);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        #output {
+            font-weight: bold;
+            margin-top: 20px;
+            color: var(--output-color);
+            font-size: 16px;
+        }
+
+        #successBox {
+            display: none;
+            margin: 20px auto;
+            padding: 12px 20px;
+            width: 300px;
+            background-color: var(--success-bg);
+            border: 1px solid var(--success-border);
+            color: var(--success-color);
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+
+    <button id="themeToggle">Switch to Light Mode</button>
+    
+    <h2>HOF & Callbacks Practice</h2>
+
+    <input type="text" id="inputField" placeholder="Type something here (onChange)...">
+    <br><br>
+
+    <button id="btnClick">Click Me (onClick)</button>
+
+    <p id="output"></p>
+    <div id="successBox"></div>
+
+    <script>
+        function processTask(data, onSuccess) {
+            output.innerText = "Task is processing...";
+            successBox.style.display = "none";
+            
+            setTimeout(() => {
+                onSuccess(data);
+            }, 1000);
+        }
+
+        const inputField = document.getElementById("inputField");
+        const btnClick = document.getElementById("btnClick");
+        const themeToggle = document.getElementById("themeToggle");
+        const output = document.getElementById("output");
+        const successBox = document.getElementById("successBox");
+        const body = document.body;
+
+        themeToggle.addEventListener("click", () => {
+            body.classList.toggle("dark-mode");
+            if (body.classList.contains("dark-mode")) {
+                themeToggle.innerText = "Switch to Light Mode";
+            } else {
+                themeToggle.innerText = "Switch to Dark Mode";
+            }
+        });
+
+        inputField.addEventListener("change", (event) => {
+            console.log("onChange triggered. Value:", event.target.value);
+            output.innerText = `onChange Value: ${event.target.value}`;
+            successBox.style.display = "none";
+        });
+
+        const onSuccess = (message) => {
+            console.log("onSuccess triggered.");
+            output.innerText = "";
+            successBox.innerText = message;
+            successBox.style.display = "block";
+        };
+
+        btnClick.addEventListener("click", () => {
+            console.log("onClick triggered.");
+            processTask("Data saved successfully!", onSuccess);
+        });
+    </script>
+
+</body>
+</html>

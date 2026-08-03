@@ -62,25 +62,16 @@ const userCity = userProfile?.address?.city ?? "Default City";
 console.log("City:", userCity);
 
 
-
-
-
-// ============================================
-// JSON — JSON.stringify / JSON.parse
-// ============================================
-
 // Ek normal JS object
 const student = { name: "Ali", marks: 80, active: true };
 console.log("Original object:", student);
 console.log("Type:", typeof student); // "object"
-
 
 // 1. stringify — object ko text (string) mein convert karna
 const jsonText = JSON.stringify(student);
 console.log("Stringified:", jsonText);
 // '{"name":"Ali","marks":80,"active":true}'
 console.log("Type after stringify:", typeof jsonText); // "string"
-
 
 // 2. parse — text ko wapis object mein convert karna
 const backToObject = JSON.parse(jsonText);
