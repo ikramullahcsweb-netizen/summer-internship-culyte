@@ -7,7 +7,7 @@ export default function App() {
             <h2 style={{ color: '#4ecca3' }}>React Props & State Practice</h2>
 
             <Child name="ikramullah" role="Full Stack Developer" />
-            <Child name="Ali Khan" role="CEO culyte" /> 
+            <Child name="AliKhan" role="CEO culyte" /> 
         </div>
     );
 }
