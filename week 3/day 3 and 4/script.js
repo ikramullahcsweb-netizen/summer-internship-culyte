@@ -1,0 +1,74 @@
+
+// Ek normal JS object
+const student = { name: "Ali", marks: 80, active: true };
+console.log("Original object:", student);
+console.log("Type:", typeof student); // "object"
+
+
+// 1. stringify — object ko text (string) mein convert karna
+const jsonText = JSON.stringify(student);
+console.log("Stringified:", jsonText);
+// '{"name":"Ali","marks":80,"active":true}'
+console.log("Type after stringify:", typeof jsonText); // "string"
+
+
+// 2. parse — text ko wapis object mein convert karna
+const backToObject = JSON.parse(jsonText);
+console.log("Parsed back:", backToObject);
+console.log("Type after parse:", typeof backToObject); // "object"
+console.log("Access a field:", backToObject.name); // "Ali"
+
+
+// 3. Pretty print — readable formatting ke liye (debugging mein useful)
+const prettyJson = JSON.stringify(student, null, 2);
+console.log("Pretty printed:\n", prettyJson);
+
+
+// 4. Real use-case — localStorage sirf strings store karta hai
+const userData = { id: 1, name: "Ikram", role: "admin" };
+
+// Save karna
+const savedString = JSON.stringify(userData);
+console.log("Saved as string:", savedString);
+
+// Wapis load karna
+const loadedUser = JSON.parse(savedString);
+console.log("Loaded user name:", loadedUser.name);
+
+// Ek student ka record
+const student2 = { name: "Ali", marks: 80, city: "Mingora" };
+
+console.log("Original:", student2);
+
+//  Galat tareeqa — direct andar se badalna
+ student2.marks = 90;
+// (isse original object hi permanently change ho jata, purani value kho jati)
+
+//  Sahi tareeqa — spread se naya object banao
+const updatedStudent = { ...student2, marks: 90 };
+
+console.log("Original still same:", student2);
+console.log("New updated version:", updatedStudent);
+
+
+// Ab isi tareeqe se ek array pe try karte hain
+const students = [
+  { name: "Ali", marks: 80 },
+  { name: "Sara", marks: 90 },
+];
+
+// Naya student add karna hai — bina purane array ko chede
+const newStudent = { name: "Zain", marks: 70 };
+const updatedList = [...students, newStudent];
+
+console.log("Original list:", students);
+console.log("Updated list:", updatedList);
+
+
+// Ek specific student ki marks update karni hai (sirf "Ali" ki)
+const afterMarksUpdate = students.map((s) =>
+  s.name === "Ali" ? { ...s, marks: 95 } : s
+);
+
+console.log("After updating Ali's marks:", afterMarksUpdate);
+console.log("Original list untouched:", students);
