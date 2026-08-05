@@ -1,4 +1,5 @@
 import { Child } from "./component/day 1/Child";
+import Progress from "./component/day 2,3/progress";
 
 
 export default function App() {
@@ -8,6 +9,7 @@ export default function App() {
 
             <Child name="ikramullah" role="Full Stack Developer" />
             <Child name="AliKhan" role="CEO culyte" /> 
+            <Progress/>
         </div>
     );
 }

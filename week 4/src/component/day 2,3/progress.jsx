@@ -1,228 +1,171 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from "react";
 
-const progress = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [favorites, setFavorites] = useState([]);
-  
-  const searchInputRef = useRef(null);
+function Progress() {
+  // 1. useState — counter
+  const [count, setCount] = useState(0);
 
-  const conceptsData = [
-    {
-      id: 1,
-      category: "React Core",
-      title: "useState Hook",
-      description: "Reading and updating component state dynamically. Allows functional components to remember data across re-renders and trigger UI updates.",
-      codeSnippet: "const [count, setCount] = useState(0);",
-      difficulty: "Beginner"
-    },
-    {
-      id: 2,
-      category: "React Core",
-      title: "useEffect Hook",
-      description: "Running side-effects on component mount, unmount, or when specific dependency values change in the dependency array.",
-      codeSnippet: "useEffect(() => { fetchUserData(); }, [userId]);",
-      difficulty: "Intermediate"
-    },
-    {
-      id: 3,
-      category: "React Core",
-      title: "Lists & Keys Prop",
-      description: "Rendering arrays efficiently using the .map() method combined with a unique key prop to help React identify modified or removed items.",
-      codeSnippet: "{items.map(item => <li key={item.id}>{item.name}</li>)}",
-      difficulty: "Beginner"
-    },
-    {
-      id: 4,
-      category: "React Core",
-      title: "Conditional Rendering",
-      description: "Controlling UI elements dynamically using logical short-circuit (&&) operators, ternary (? :) conditions, or if-else blocks.",
-      codeSnippet: "{isLoggedIn ? <AdminDashboard /> : <LoginPrompt />}",
-      difficulty: "Beginner"
-    },
-    {
-      id: 5,
-      category: "React Advanced",
-      title: "useRef Hook",
-      description: "Accessing and manipulating DOM elements directly without triggering re-renders, or storing mutable variables across renders.",
-      codeSnippet: "const inputRef = useRef(null); inputRef.current.focus();",
-      difficulty: "Advanced"
-    },
-    {
-      id: 6,
-      category: "React Advanced",
-      title: "Event Handling & Forms",
-      description: "Managing user inputs using controlled components where form data is handled by component state via onChange event listeners.",
-      codeSnippet: "const handleChange = (e) => setValue(e.target.value);",
-      difficulty: "Intermediate"
-    },
-    {
-      id: 7,
-      category: "Tailwind CSS",
-      title: "Utility Classes",
-      description: "Fast styling using built-in utility classes for spacing (p-4, m-2), flexbox, grid layouts, custom colors, and typography properties.",
-      codeSnippet: "className=\"flex items-center justify-between p-4 bg-white shadow-md\"",
-      difficulty: "Beginner"
-    },
-    {
-      id: 8,
-      category: "Tailwind CSS",
-      title: "Responsive & State Variants",
-      description: "Using breakpoint prefixes like sm:, md:, lg:, xl:, and state variants like hover:, focus:, active: for interactive multi-device designs.",
-      codeSnippet: "className=\"bg-blue-500 hover:bg-blue-600 md:w-1/2 lg:w-1/3\"",
-      difficulty: "Intermediate"
-    }
-  ];
+  // 2. useEffect — dummy data fetch simulation
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setIsLoaded(true);
-    console.log("Detailed Progress component mounted successfully!");
-    
-    // Optional: Focus search input automatically on mount using useRef
-    if (searchInputRef.current) {
-      searchInputRef.current.focus();
-    }
-  }, []);
+    const dummyUser = {
+      name: "Ali Raza",
+      email: "aliraza@example.com",
+    };
 
-  // Toggle favorite concept function
-  const toggleFavorite = (id) => {
-    if (favorites.includes(id)) {
-      setFavorites(favorites.filter(favId => favId !== id));
-    } else {
-      setFavorites([...favorites, id]);
-    }
-  };
+    const timer = setTimeout(() => {
+      setUser(dummyUser);
+      setLoading(false);
+    }, 1000); // 1 second delay taake loading dikhe
 
-  // Filter logic based on search term and category
-  const filteredConcepts = conceptsData.filter(item => {
-    const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          item.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+    return () => clearTimeout(timer); // cleanup
+  }, []); // empty array = sirf mount pe chalega
+
+  // 3. List rendering
+  const fruits = [
+    { id: 1, name: "Apple", color: "Red", price: 120, inStock: true },
+    { id: 2, name: "Banana", color: "Yellow", price: 60, inStock: true },
+    { id: 3, name: "Mango", color: "Orange", price: 150, inStock: false },
+    { id: 4, name: "Orange", color: "Orange", price: 90, inStock: true },
+    { id: 5, name: "Grapes", color: "Green", price: 200, inStock: false },
+  ];
+
+  // 4. Conditional rendering
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [hasNotifications, setHasNotifications] = useState(true);
+
+  // 5. Search/filter
+  const [query, setQuery] = useState("");
+  const items = ["React", "Tailwind", "JavaScript", "Node", "MongoDB"];
+
+  const filtered = items.filter((item) =>
+    item.toLowerCase().includes(query.toLowerCase())
+  );
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 p-6 sm:p-12 font-sans">
-      <div className="max-w-5xl mx-auto">
-        
-        {/* Status Notification */}
-        {isLoaded && (
-          <div className="mb-6 p-4 bg-gray-50 border border-gray-300 rounded text-gray-700 text-sm flex items-center justify-between shadow-sm">
-            <span>System Status: Extended React & Tailwind Curriculum Loaded ({conceptsData.length} Topics)</span>
-            <span className="text-xs bg-gray-200 text-gray-800 font-medium px-2.5 py-1 rounded">Active</span>
+    <div className="min-h-screen bg-gray-50 p-8 flex flex-col gap-6 items-center">
+      <h1 className="text-2xl font-bold mb-2">React + Tailwind Practice</h1>
+
+      {/* 1. useState — Counter */}
+      <div className="flex flex-col items-center gap-3 p-6 border rounded">
+        <h2 className="font-bold text-lg">1. useState — Counter</h2>
+        <p className="text-2xl font-bold">{count}</p>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setCount(count - 1)}
+            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+          >
+            -
+          </button>
+          <button
+            onClick={() => setCount(count + 1)}
+            className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+          >
+            +
+          </button>
+        </div>
+      </div>
+
+      {/* 2. useEffect — Dummy user fetch */}
+      <div className="p-6 border rounded">
+        <h2 className="font-bold text-lg mb-2">2. useEffect — Dummy User</h2>
+        {loading ? (
+          <p className="text-gray-400 text-sm">Loading...</p>
+        ) : (
+          <div>
+            <p className="font-medium">{user.name}</p>
+            <p className="text-sm text-gray-500">{user.email}</p>
           </div>
         )}
+      </div>
 
-        {/* Header Section */}
-        <header className="mb-10 text-center">
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-gray-900 mb-3 tracking-tight">
-            Comprehensive Frontend Progress
-          </h1>
-          <p className="text-gray-600 text-base max-w-2xl mx-auto">
-            A detailed breakdown of React hooks, state management patterns, event handlers, and Tailwind CSS configuration principles.
-          </p>
-          
-          {/* Search Bar & Controls */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <input 
-              ref={searchInputRef}
-              type="text"
-              placeholder="Search concepts or descriptions..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full sm:w-96 px-4 py-2.5 bg-white border border-gray-300 rounded focus:outline-none focus:border-black text-gray-900 shadow-sm"
-            />
-            
-            <div className="flex gap-2 flex-wrap justify-center">
-              {['All', 'React Core', 'React Advanced', 'Tailwind CSS'].map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`px-3 py-2 text-xs font-medium rounded border transition-colors ${
-                    selectedCategory === category 
-                      ? 'bg-black text-white border-black' 
-                      : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-          </div>
-        </header>
+      {/* 3. List rendering + key prop */}
+      <div className="p-6 border rounded w-full max-w-md">
+        <h2 className="font-bold text-lg mb-2">3. List Rendering — Fruits</h2>
+        <ul className="space-y-2">
+          {fruits.map((fruit) => (
+            <li
+              key={fruit.id}
+              className="flex items-center justify-between px-3 py-2 bg-gray-100 rounded text-gray-800"
+            >
+              <div>
+                <p className="font-medium">{fruit.name}</p>
+                <p className="text-xs text-gray-500">Color: {fruit.color}</p>
+              </div>
 
-        {/* Results Counter */}
-        <div className="mb-6 text-xs text-gray-500 font-medium">
-          Showing {filteredConcepts.length} of {conceptsData.length} concepts
+              <div className="text-right">
+                <p className="font-medium">Rs. {fruit.price}</p>
+                {fruit.inStock ? (
+                  <span className="text-xs text-green-600">In Stock</span>
+                ) : (
+                  <span className="text-xs text-red-500">Out of Stock</span>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        <p className="text-sm text-gray-500 mt-3">
+          Total items: {fruits.length}
+        </p>
+      </div>
+
+      {/* 4. Conditional rendering — && aur ternary */}
+      <div className="p-6 border rounded">
+        <h2 className="font-bold text-lg mb-2">4. Conditional Rendering</h2>
+
+        <div className="flex gap-2 mb-3">
+          <button
+            onClick={() => setIsLoggedIn(!isLoggedIn)}
+            className="px-3 py-1 bg-blue-500 text-white rounded text-sm"
+          >
+            Toggle Login
+          </button>
+          <button
+            onClick={() => setHasNotifications(!hasNotifications)}
+            className="px-3 py-1 bg-purple-500 text-white rounded text-sm"
+          >
+            Toggle Notifications
+          </button>
         </div>
 
-        {/* Main Content Grid */}
-        {filteredConcepts.length === 0 ? (
-          <div className="text-center py-16 text-gray-500 border border-dashed border-gray-300 rounded">
-            No matching concepts found for "{searchTerm}".
-          </div>
+        {isLoggedIn ? (
+          <p className="text-green-600">Welcome back!</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {filteredConcepts.map((item) => {
-              const isFav = favorites.includes(item.id);
-              return (
-                <div 
-                  key={item.id} 
-                  className="p-6 rounded border border-gray-200 bg-white flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs font-semibold px-2.5 py-1 rounded bg-gray-100 text-gray-800">
-                        {item.category}
-                      </span>
-                      
-                      <div className="flex items-center gap-2">
-                        <span className={`text-[10px] px-2 py-0.5 rounded font-medium ${
-                          item.difficulty === 'Beginner' ? 'bg-green-100 text-green-800' :
-                          item.difficulty === 'Intermediate' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'
-                        }`}>
-                          {item.difficulty}
-                        </span>
-                        
-                        <button 
-                          onClick={() => toggleFavorite(item.id)}
-                          className={`text-xs px-2 py-0.5 rounded border transition-colors ${
-                            isFav ? 'bg-amber-100 border-amber-300 text-amber-800' : 'bg-gray-50 border-gray-200 text-gray-400 hover:text-gray-700'
-                          }`}
-                        >
-                          {isFav ? '★ Saved' : '☆ Save'}
-                        </button>
-                      </div>
-                    </div>
-
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">
-                      {item.title}
-                    </h3>
-                    
-                    <p className="text-gray-600 text-sm mb-4 leading-relaxed">
-                      {item.description}
-                    </p>
-                  </div>
-
-                  <div className="bg-gray-50 border border-gray-200 rounded p-3 font-mono text-xs text-gray-800 overflow-x-auto">
-                    <code>{item.codeSnippet}</code>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          <p className="text-red-600">Please log in.</p>
         )}
 
-        {/* Footer Section */}
-        <footer className="mt-16 text-center text-xs text-gray-500 border-t border-gray-200 pt-6">
-          <p>Frontend Development Internship Program • Day 2 & 3 Modules</p>
-          <p className="mt-1">Tip: Prettier auto-sorts classes — never hand-order them!</p>
-        </footer>
+        {hasNotifications && (
+          <p className="text-blue-500 mt-2">You have new notifications</p>
+        )}
+      </div>
 
+      {/* 5. Search / Filter */}
+      <div className="p-6 border rounded max-w-sm">
+        <h2 className="font-bold text-lg mb-2">5. Search / Filter</h2>
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search..."
+          className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+
+        <ul className="mt-3 space-y-1">
+          {filtered.length > 0 ? (
+            filtered.map((item, i) => (
+              <li key={i} className="px-2 py-1 bg-gray-50 rounded">
+                {item}
+              </li>
+            ))
+          ) : (
+            <p className="text-gray-400 text-sm">No results found</p>
+          )}
+        </ul>
       </div>
     </div>
-  )
+  );
 }
 
-export default progress
+export default Progress;
