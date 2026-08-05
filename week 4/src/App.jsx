@@ -1,4 +1,4 @@
-import { Child } from "./component/child";
+import { Child } from "./component/day 1/Child";
 
 
 export default function App() {
