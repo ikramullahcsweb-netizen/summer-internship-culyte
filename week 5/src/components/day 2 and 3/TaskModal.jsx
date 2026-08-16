@@ -50,7 +50,7 @@ export default function TaskModal() {
               <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>
                 Cancel
               </Button>
-              <Button type="submit">Save Task</Button>
+              <Button type="submit">Save Task.</Button>
             </div>
           </form>
         </DialogContent>
