@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@day2/ui/button";
+import { Input } from "@day2/ui/input";
+import path from "node:path";
+
 import { 
   Dialog, 
   DialogContent, 
   DialogHeader, 
   DialogTitle, 
   DialogTrigger 
-} from "@/components/ui/dialog";
+} from "@day2/ui/dialog";
+
 
 export default function TaskModal() {
   // --- Business Logic & State ---
@@ -27,7 +30,7 @@ export default function TaskModal() {
 
   return (
     <div className="p-6 space-y-4">
-      <h2 className="text-xl font-bold">Day 2 and 3: Shadcn Integration</h2>
+      <h2 className="text-xl font-bold">Shadcn Integration</h2>
       
       {/* Dialog Component using Shadcn UI */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
