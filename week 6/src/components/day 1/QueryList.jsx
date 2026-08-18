@@ -1,4 +1,3 @@
-
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "@/components/day 1/api/productsApi";
 import UserCard from "@/components/day 1/components/UserCard";
