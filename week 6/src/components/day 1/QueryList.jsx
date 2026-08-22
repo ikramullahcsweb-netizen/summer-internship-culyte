@@ -30,9 +30,11 @@ const QueryList = () => {
       </h2>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-        {data.map((user) => (
-          <UserCard key={user.login.uuid} user={user} />
-        ))}
+        {data?.map((user, index) => {
+    
+          const userKey = user?.login?.uuid || user?.id || index;  
+          return <UserCard key={userKey} user={user} />;
+        })}
       </div>
     </div>
   );
