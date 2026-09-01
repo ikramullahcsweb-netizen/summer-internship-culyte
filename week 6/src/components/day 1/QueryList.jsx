@@ -24,7 +24,7 @@ const QueryList = () => {
   if (error) return <ErrorState message={error.message} />;
 
   return (
-    <div className="max-w-3xl mx-auto p-4 bg-white shadow-lg rounded-2xl border border-gray-100">
+    <div className="max-w-3xl mx-auto p-3 bg-white shadow-lg rounded-2xl border border-gray-100 ">
       <h2 className="text-xl font-bold mb-4 text-gray-800">
         Day 1: TanStack Query (`useQuery`) - Users
       </h2>
